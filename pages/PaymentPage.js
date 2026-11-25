@@ -1,4 +1,4 @@
-class PaymentPage {
+export default class PaymentPage {
   constructor(page) {
     this.page = page;
   }
@@ -22,5 +22,3 @@ class PaymentPage {
     await this.page.getByRole('button', { name: /^Verify & Pay\b/ }).click();
   }
 }
-
-module.exports = PaymentPage;

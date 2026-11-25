@@ -1,4 +1,4 @@
-class CheckoutPage {
+export default class CheckoutPage {
   constructor(page) {
     this.page = page;
   }
@@ -26,5 +26,3 @@ class CheckoutPage {
     await this.page.getByRole('button', { name: 'Place order', exact: true }).click();
   }
 }
-
-module.exports = CheckoutPage;

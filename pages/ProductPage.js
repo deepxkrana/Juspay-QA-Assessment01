@@ -1,4 +1,4 @@
-class ProductPage {
+export default class ProductPage {
   constructor(page) {
     this.page = page;
   }
@@ -16,5 +16,3 @@ class ProductPage {
     await this.page.getByRole('link', { name: /view cart/i }).click();
   }
 }
-
-module.exports = ProductPage;

@@ -1,6 +1,6 @@
-const { test, expect } = require('@playwright/test');
-const LoginPage = require('../pages/LoginPage');
-const ProductPage = require('../pages/ProductPage');
+import { test, expect } from '@playwright/test';
+import LoginPage from '../pages/LoginPage.js';
+import ProductPage from '../pages/ProductPage.js';
 
 test.describe('Product Page Flow', () => {
   test.beforeEach(async ({ page }) => {

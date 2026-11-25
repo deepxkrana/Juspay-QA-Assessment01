@@ -1,4 +1,4 @@
-class LoginPage {
+export default class LoginPage {
   constructor(page) {
     this.page = page;
   }
@@ -16,5 +16,3 @@ class LoginPage {
     await this.openLogin();
   }
 }
-
-module.exports = LoginPage;

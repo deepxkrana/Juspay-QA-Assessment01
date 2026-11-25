@@ -1,64 +1,51 @@
-# Juspay Playwright E2E Tests
+# Kickstead storefront tests
 
-This project contains end-to-end browser tests for the Kickstead storefront. The tests use Playwright Test and run in Chromium.
+This project uses Playwright to test [Kickstead](https://kickstead.vercel.app/), a demo footwear store. You can try the storefront yourself or run the browser tests in this repo.
 
-## Covered workflows
+The checkout uses a simulated payment gateway. The test card and OTP are dummy values; no real payment is made.
 
-- Login (`tests/login.spec.js`): opens the configured base URL, navigates to `/login`, signs in with email and password, and verifies that the page leaves the login route.
-- Product (`tests/product.spec.js`): signs in, opens `/products`, selects Metro Knit, adds it to the cart, clicks View cart, and verifies navigation to `/cart`.
-- Cart (`tests/cart.spec.js`): signs in, adds Metro Knit to the cart, opens the cart, and verifies the product is displayed.
-- Checkout (`tests/checkout.spec.js`): signs in, prepares a cart with Metro Knit, fills a new address, selects it, places a demo order, and verifies navigation to the generated order page.
-- Payment (`tests/payment.spec.js`): opens the demo order, fills the dummy card and OTP details from `data/paymentDetails.js`, and verifies payment success. The gateway is simulated and does not process real card details.
-- Purchase (`tests/purchase.spec.js`): completes the full home → login → product → cart → checkout → payment journey with one sign-in.
+## Try the demo
 
-The focused specs each perform their own sign-in. The purchase spec keeps the entire journey in one test and signs in once. Tests run one at a time because they share and modify the signed-in account's cart and orders. Use a dedicated test account.
+1. Open [kickstead.vercel.app](https://kickstead.vercel.app/).
+2. Sign in with an authorized demo or test account.
+3. Open the shop and select **Metro Knit**.
+4. Choose **Add to cart**, then **View cart**.
+5. In the cart, choose **Checkout**. Add or select a delivery address, then choose **Place order**.
+6. On the order page, enter the dummy card details, choose **Proceed to OTP**, enter the dummy OTP, and choose **Verify & Pay**.
+7. The order page should show that the simulated payment succeeded.
 
-## Prerequisites
+The address used by the automated tests is in [`data/checkoutAddress.js`](./data/checkoutAddress.js). The dummy card and OTP are in [`data/paymentDetails.js`](./data/paymentDetails.js).
 
-- Node.js and npm
-- Access to the storefront specified by `BASE_URL`
-- A test account that can sign in with email
+## Set up the tests
 
-## Setup
-
-Install the project dependencies and Chromium:
+You will need Node.js, npm, and access to the storefront.
 
 ```sh
 npm install
 npx playwright install chromium
-```
-
-Create a local `.env` file from the example:
-
-```sh
 cp .env.example .env
 ```
 
-Set the following values in `.env`:
+Open `.env` and set `TEST_EMAIL` and `TEST_PASSWORD` to the credentials for your authorized test account. `BASE_URL` is already set to the Kickstead demo site. Keep `.env` private; it is ignored by Git.
 
-| Variable | Description |
-| --- | --- |
-| `BASE_URL` | Storefront origin, for example `https://your-store.example` |
-| `TEST_EMAIL` | Email address for the test account |
-| `TEST_PASSWORD` | Password for the test account |
+## Run the tests
 
-Keep `.env` private; it is ignored by Git. Do not put real credentials in `.env.example`.
-
-## Run tests
-
-Run the complete suite:
-
-```sh
-npm test
-```
-
-Run the single end-to-end purchase flow:
+To run the main journey from the home page through payment:
 
 ```sh
 npm run test:purchase
 ```
 
-Run one spec:
+**NOTE**
+To watch that same journey in a visible browser:
+
+```sh
+npm run test:headed
+```
+
+The purchase test signs in once, then visits the product, cart, checkout, and payment pages in sequence.
+
+There are also focused tests for each stage. Each focused test signs in separately:
 
 ```sh
 npm test -- tests/login.spec.js
@@ -68,30 +55,30 @@ npm test -- tests/checkout.spec.js
 npm test -- tests/payment.spec.js
 ```
 
-Run the complete purchase flow with the browser visible:
-
-```sh
-npm run test:headed
-```
-
-Run all focused specs with the browser visible:
+Run all tests with `npm test`. To run every focused spec in a visible browser:
 
 ```sh
 npm run test:headed:all
 ```
 
-The Playwright configuration captures screenshots on failure, records video, and collects a trace on the first retry. Open the HTML report after a run with:
+Each focused spec is an independent test and signs in separately, so the login page will appear again between specs. This is expected. To watch the full shopping journey with one sign-in, use `npm run test:headed` instead.
+
+The tests run one at a time because they share an account and can change its cart or orders. Use a dedicated test account; repeated runs may leave test orders in its order history.
+
+Playwright records video, saves screenshots on failure, and captures a trace on the first retry. To open the HTML report after a run:
 
 ```sh
 npm run report
 ```
+**NOTE**
+If the above command throws error, run `npx playwright show-report`
 
 ## Project layout
 
 ```text
 pages/       Page objects and reusable page actions
-tests/       Focused specs and the full purchase journey
-data/        Shared synthetic test data
-fixtures/    Shared Playwright fixtures (when needed)
-utils/       Shared test helpers (when needed)
+tests/       Focused tests and the full purchase journey
+data/        Test address and dummy payment details
+fixtures/    Shared Playwright fixtures, when needed
+utils/       Shared helpers, when needed
 ```

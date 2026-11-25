@@ -1,11 +1,11 @@
-const { test, expect } = require('@playwright/test');
-const CartPage = require('../pages/CartPage');
-const CheckoutPage = require('../pages/CheckoutPage');
-const LoginPage = require('../pages/LoginPage');
-const PaymentPage = require('../pages/PaymentPage');
-const ProductPage = require('../pages/ProductPage');
-const testAddress = require('../data/checkoutAddress');
-const paymentDetails = require('../data/paymentDetails');
+import { test, expect } from '@playwright/test';
+import CartPage from '../pages/CartPage.js';
+import CheckoutPage from '../pages/CheckoutPage.js';
+import LoginPage from '../pages/LoginPage.js';
+import PaymentPage from '../pages/PaymentPage.js';
+import ProductPage from '../pages/ProductPage.js';
+import testAddress from '../data/checkoutAddress.js';
+import paymentDetails from '../data/paymentDetails.js';
 
 test.setTimeout(120_000);
 
@@ -66,6 +66,7 @@ test('user can complete the home-to-payment flow', async ({ page }) => {
   await paymentPage.fillCardDetails(paymentDetails);
   await expect(page.getByLabel('Card number')).toHaveValue(paymentDetails.cardNumber);
   await paymentPage.proceedToOtp();
+
   await paymentPage.fillOtp(paymentDetails.otp);
   await expect(page.locator('input[autocomplete="one-time-code"]')).toHaveValue(paymentDetails.otp);
   await paymentPage.verifyAndPay();

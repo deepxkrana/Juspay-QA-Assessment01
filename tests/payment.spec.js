@@ -1,10 +1,10 @@
-const { test, expect } = require('@playwright/test');
-const CartPage = require('../pages/CartPage');
-const CheckoutPage = require('../pages/CheckoutPage');
-const LoginPage = require('../pages/LoginPage');
-const PaymentPage = require('../pages/PaymentPage');
-const ProductPage = require('../pages/ProductPage');
-const paymentDetails = require('../data/paymentDetails');
+import { test, expect } from '@playwright/test';
+import CartPage from '../pages/CartPage.js';
+import CheckoutPage from '../pages/CheckoutPage.js';
+import LoginPage from '../pages/LoginPage.js';
+import PaymentPage from '../pages/PaymentPage.js';
+import ProductPage from '../pages/ProductPage.js';
+import paymentDetails from '../data/paymentDetails.js';
 
 test.describe('Payment Flow', () => {
   test.beforeEach(async ({ page }) => {
