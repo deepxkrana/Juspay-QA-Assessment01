@@ -1,4 +1,3 @@
-// @ts-check
 import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 
@@ -16,7 +15,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'on',
     launchOptions: {
-      slowMo: 2000, // Waits 500ms between each action
+      slowMo: 2000, // Waits 2000ms between each action
     },
   },
   projects: [
