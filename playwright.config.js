@@ -16,6 +16,7 @@ import { defineConfig, devices } from '@playwright/test';
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 60_000,
+  workers: 1,
   reporter: [['list'], ['html']],
   use: {
     baseURL: process.env.BASE_URL,
@@ -23,7 +24,7 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
     video: 'on',
     launchOptions: {
-      slowMo: 500, // Waits 500ms between each action
+      slowMo: 2000, // Waits 500ms between each action
     },
   },
   projects: [
