@@ -1,4 +1,5 @@
 # Kickstead storefront tests
+# Juspay QE payment automation assessment
 
 This project uses Playwright to test [Kickstead](https://kickstead.vercel.app/), a demo footwear store. You can try the storefront yourself or run the browser tests in this repo.
 
