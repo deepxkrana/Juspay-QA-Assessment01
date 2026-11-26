@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test'
-test('Open goole maps and search for howrah brideg',async({page})=>{
+test('Open goole maps and search for howrah bridge',async({page})=>{
   await page.goto('https://www.google.com/maps/');
   console.log('https://www.google.com/maps/')
   await expect(page).toHaveURL(/google\.com\/maps/);

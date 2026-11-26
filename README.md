@@ -44,6 +44,14 @@ To watch that same journey in a visible browser:
 npm run test:headed
 ```
 
+**NOTE**
+To run the google map automation:
+
+```sh
+npx playwright test tests/maps.spec.js --project=chromium --headed
+```
+
+
 The purchase test signs in once, then visits the product, cart, checkout, and payment pages in sequence.
 
 There are also focused tests for each stage. Each focused test signs in separately:
